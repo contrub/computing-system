@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ComputingSystem
 {
-    class MemoryMamager
+    class MemoryManager
     {
         public void Save(long size)
         {
@@ -13,14 +13,13 @@ namespace ComputingSystem
 
         public Memory Allocate(Process process)
         {
-            if (process.AddrSpace > memory.OccupiedSize)
+            if (memory.FreeSize >= process.AddrSpace)
             {
-                return null;
+                memory.OccupiedSize += process.AddrSpace;
+                return memory;
             }
 
-            memory.OccupiedSize += process.AddrSpace;
-
-            return memory;
+            return null;
         }
 
         public Memory Free(Process process)
