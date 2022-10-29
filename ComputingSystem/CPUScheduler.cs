@@ -7,7 +7,7 @@ namespace ComputingSystem
 {
 	class CPUScheduler
 	{
-		CPUScheduler(Resource resource, IQueueable<Process> queue)
+        public CPUScheduler(Resource resource, IQueueable<Process> queue)
 		{
 			resource = resource;
 			queue = queue;

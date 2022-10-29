@@ -7,7 +7,7 @@ namespace ComputingSystem
 {
     class DeviceScheduler
     {
-        DeviceScheduler(Resource resource, IQueueable<Process> queue)
+        public DeviceScheduler(Resource resource, IQueueable<Process> queue)
         {
             resource = resource;
             queue = queue;
