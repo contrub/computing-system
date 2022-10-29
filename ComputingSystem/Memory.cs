@@ -24,12 +24,10 @@ namespace ComputingSystem
 
         public long OccupiedSize { get; set; }
 
-        private long FreeSize
+        public long FreeSize
         {
-            get
-            {
-                return Size - occupiedSize;
-            }
+            get;
+            private set;
         }
     }
 
