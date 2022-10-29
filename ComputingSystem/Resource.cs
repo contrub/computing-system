@@ -9,7 +9,7 @@ namespace ComputingSystem
     {
         public void WorkingCycle()
         {
-            if (activeProcess.Status == ProcessStatus.runnning)
+            if (!IsFree())
             {
                 activeProcess.IncreaseWorkTime();
             }
@@ -17,7 +17,7 @@ namespace ComputingSystem
 
         public bool IsFree()
         {
-            return activeProcess.Status == ProcessStatus.waiting;
+            return activeProcess == null;
         }
 
         public void Clear()

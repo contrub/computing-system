@@ -9,8 +9,8 @@ namespace ComputingSystem
     {
         public DeviceScheduler(Resource resource, IQueueable<Process> queue)
         {
-            resource = resource;
-            queue = queue;
+            this.resource = resource;
+            this.queue = queue;
         }
 
         public IQueueable<Process> Session()

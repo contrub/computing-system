@@ -10,10 +10,11 @@ namespace ComputingSystem
         ready,
         runnning,
         waiting,
-        terminated
+        terminated,
+        running
     }
 
-    class Process : IComparable
+    class Process : IComparable<Process>
     {
         public Process(long pId, long addrSpace)
         {
@@ -46,29 +47,25 @@ namespace ComputingSystem
                 " Status" + Status.ToString();
         }
 
-        public int CompareTo(object obj)
+        public int CompareTo(Process otherProc)
         {
-            if (obj == null)
+            if (otherProc == null)
             {
                 return 1;
             }
+            return otherProc.BurstTime.CompareTo(BurstTime);
+        }
 
-            Process otheProcess = obj as Process;
+        public event EventHandler FreeingAResource;
 
-            if (otheProcess != null)
+        private void OnFreeingAResource()
+        {
+            if (FreeingAResource != null)
             {
-                if (BurstTime < otheProcess.BurstTime)
-                {
-                    return 1;
-                }
-
-                return BurstTime < otheProcess.BurstTime ? 1 : 0;
-            }
-            else
-            {
-                throw new ArgumentException("Object is not a Process");
+                FreeingAResource(this, null);
             }
         }
+
 
         private Random rnd;
 

@@ -6,12 +6,12 @@ namespace ComputingSystem
 {
     class MemoryManager
     {
-        public void Save(long size)
+        public void Save(Memory mem)
         {
-            memory.Save(size);
+            memory = mem;
         }
 
-        public Memory Allocate(Process process)
+        public Memory? Allocate(Process process)
         {
             if (memory.FreeSize >= process.AddrSpace)
             {
@@ -29,6 +29,6 @@ namespace ComputingSystem
             return memory;
         }
 
-        private Memory memory;
+        private Memory? memory;
     }
 }
