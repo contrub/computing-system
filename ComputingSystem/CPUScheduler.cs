@@ -15,7 +15,6 @@ namespace ComputingSystem
 
 		public IQueueable<Process> Session()
 		{
-            // только для пустой очереди
             Process newActiveProcess = queue.Item();
             newActiveProcess.Status = ProcessStatus.running;
             queue.Remove();
@@ -23,7 +22,7 @@ namespace ComputingSystem
             return queue;
         }
 
-		private Resource resource;
-		private IQueueable<Process> queue;
+		private readonly Resource resource;
+		private readonly IQueueable<Process> queue;
 	}
 }

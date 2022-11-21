@@ -32,7 +32,7 @@ namespace ComputingSystem
                 return;
             }
 
-            Status = rnd.Next(0, 2) == 0 ? ProcessStatus.terminated : ProcessStatus.waiting;
+            Status = rnd.Next(0, 2) != 0 ? ProcessStatus.waiting : ProcessStatus.terminated;
         }
 
         public void ResetWorkTime()
@@ -43,11 +43,11 @@ namespace ComputingSystem
         [Pure]
         public override string ToString()
         {
-            return "Proc" + id + " BurstTime" + " WorkTime:" + ResetWorkTime +
-                " Status" + Status.ToString();
+            return "Proc" + id + "; BurstTime: " + BurstTime + "; WorkTime: " + workTime +
+                "; Status: " + Status.ToString();
         }
 
-        public int CompareTo(Process otherProc)
+        public int CompareTo (Process? otherProc)
         {
             if (otherProc == null)
             {
@@ -60,18 +60,15 @@ namespace ComputingSystem
 
         private void OnFreeingAResource()
         {
-            if (FreeingAResource != null)
-            {
-                FreeingAResource(this, null);
-            }
+            FreeingAResource?.Invoke(this, null);
         }
 
 
-        private Random rnd;
+        private readonly Random rnd = new();
 
-        private long id;
+        private readonly long id;
 
-        private string name;
+        private readonly string name;
 
         public long BurstTime { get; set; }
 
