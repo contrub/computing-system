@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Queues;
 using Structures;
 
 namespace ComputingSystem
 {
-    class Model
+    class Model: INotifyPropertyChanged
     {
         public Model()
         {
@@ -24,6 +27,32 @@ namespace ComputingSystem
             ram = new Memory();
         }
 
+        public IQueueable<Process> ReadyQueue 
+        { 
+            get
+            {
+                return readyQueue;
+            }
+            set
+            {
+                readyQueue = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public IQueueable<Process> DeviceQueue 
+        { 
+            get
+            {
+                return deviceQueue;
+            }
+            set
+            {
+                deviceQueue = value;
+                OnPropertyChanged();
+            }
+        }
+
         public void SaveSettings()
         {
             ram.Save(modelSettings.ValueOfRAMSize);
@@ -34,13 +63,13 @@ namespace ComputingSystem
             clock.WorkingCycle();
             if (processRand.NextDouble() <= modelSettings.Intensity)
             {
-                Process proc = new Process(idGen.Id,
+                Process proc = new(idGen.Id,
                     processRand.Next(modelSettings.MinValueOfAddrSpace, modelSettings.MaxValueOfAddrSpace + 1));
                 if (memoryManager.Allocate(proc) != null)
                 {
                     proc.BurstTime = processRand.Next(modelSettings.MinValueOfBurstTime,
                         modelSettings.MaxValueOfBurstTime + 1);
-                    Subscribe(proc);
+                    // Subscribe(proc);
                     readyQueue = readyQueue.Put(proc);
                     if (cpu.IsFree())
                     {
@@ -55,7 +84,8 @@ namespace ComputingSystem
         private void FreeingResourceEventHandler(object sender, EventArgs e)
         {
             Process? proc = sender as Process;
-            if (proc.Status == ProcessStatus.waiting) //Процесс покидает внешнее устройство
+
+            if (proc?.Status == ProcessStatus.waiting)
             {
                 device.Clear();
                 proc.Status = ProcessStatus.ready;
@@ -68,14 +98,16 @@ namespace ComputingSystem
                 if (cpu.IsFree())
                 {
                     readyQueue = cpuScheduler.Session();
+                    // Subscribe(cpu.ActiveProcess);
                 }
 
                 if (deviceQueue.Count != 0)
                 {
                     deviceQueue = deviceScheduler.Session();
+                    // Subscribe(device.ActiveProcess);
                 }
             }
-            else //Процесс покидает процессор
+            else
             {
                 cpu.Clear();
                 if (readyQueue.Count != 0)
@@ -88,7 +120,7 @@ namespace ComputingSystem
                 if (proc.Status == ProcessStatus.terminated)
                 {
                     memoryManager.Free(proc);
-                    Unsubscribe(proc);
+                    // Unsubscribe(proc);
                 }
                 else
                 {
@@ -104,7 +136,7 @@ namespace ComputingSystem
             }
         }
 
-        void Clear()
+        public void Clear()
         {
             cpu.Clear();
             device.Clear();
@@ -113,32 +145,75 @@ namespace ComputingSystem
             deviceQueue.Clear();
         }
 
-        private void Subscribe(Process proc)
+        private void Subscribe(Resource resource)
         {
-            if (proc != null)
+            if (resource.ActiveProcess != null)
+                resource.ActiveProcess.FreeingAResource += FreeingAResourceEventHandler;
+        }
+
+        private void Unsubscribe(Resource resource)
+        {
+            if (resource.ActiveProcess != null)
+                resource.ActiveProcess.FreeingAResource -= FreeingAResourceEventHandler;
+        }
+
+        private void FreeingAResourceEventHandler(object sender, EventArgs e)
+        {
+            Process? resourceFreeingProcess = sender as Process;
+
+            switch (resourceFreeingProcess?.Status)
             {
-                proc.FreeingAResource += FreeingResourceEventHandler;
+                case ProcessStatus.terminated:
+                    Unsubscribe(Cpu);
+                    Cpu.Clear();
+                    memoryManager.Free(resourceFreeingProcess);
+                    if (readyQueue.Count != 0)
+                        PutProcessOnResource(Cpu);
+                    break;
+                case ProcessStatus.waiting:
+                    Unsubscribe(Cpu);
+                    Cpu.Clear();
+                    if (readyQueue.Count != 0)
+                        PutProcessOnResource(Cpu);
+                    resourceFreeingProcess.ResetWorkTime();
+                    resourceFreeingProcess.BurstTime =
+                        processRand.Next(ModelSettings.MinValueOfBurstTime, ModelSettings.MaxValueOfBurstTime + 1);
+                    DeviceQueue = DeviceQueue.Put(resourceFreeingProcess);
+                    if (Device.IsFree())
+                    {
+                        PutProcessOnResource(Device);
+                    }
+                    break;
+                case ProcessStatus.ready:
+                    Unsubscribe(Device);
+                    Device.Clear();
+                    if (deviceQueue.Count != 0)
+                        PutProcessOnResource(Device);
+                    resourceFreeingProcess.ResetWorkTime();
+                    resourceFreeingProcess.BurstTime =
+                        processRand.Next(ModelSettings.MinValueOfBurstTime, ModelSettings.MaxValueOfBurstTime + 1);
+                    ReadyQueue = readyQueue.Put(resourceFreeingProcess);
+                    if (Cpu.IsFree())
+                    {
+                        PutProcessOnResource(Cpu);
+                    }
+                    break;
+                default:
+                    throw new Exception("Uknown process status");
             }
         }
 
-        private void Unsubscribe(Process proc)
+        private void PutProcessOnResource(Resource resource)
         {
-            if (proc != null)
+            if (resource == Cpu)
             {
-                proc.FreeingAResource -= FreeingResourceEventHandler;
+                ReadyQueue = cpuScheduler.Session();
             }
-        }
-
-        public IQueueable<Process> ReadyQueue
-        {
-            get { return readyQueue; }
-            set { readyQueue = value; }
-        }
-
-        public IQueueable<Process> DeviceQueue
-        {
-            get { return deviceQueue; }
-            set { deviceQueue = value; }
+            else
+            {
+                DeviceQueue = cpuScheduler.Session();
+            }
+            Subscribe(resource);
         }
 
         public Settings ModelSettings
@@ -156,18 +231,35 @@ namespace ComputingSystem
             get { return cpu; }
         }
 
-        private SystemClock clock;
-        private Resource cpu;
-        public Resource device;
-        private IdGenerator idGen;
+        public Memory Ram
+        { 
+            get { return ram; }
+        }
+
+        public SystemClock Clock
+        {
+            get { return clock; }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private readonly SystemClock clock;
+        private readonly Resource cpu;
+        public readonly Resource device;
+        private readonly Memory ram;
+        private readonly IdGenerator idGen;
         private IQueueable<Process> deviceQueue;
         private IQueueable<Process> readyQueue;
-        private CPUScheduler cpuScheduler;
-        private DeviceScheduler deviceScheduler;
-        private MemoryManager memoryManager;
-        private Settings modelSettings;
-        private Random processRand;
-        private Memory ram;
+        private readonly CPUScheduler cpuScheduler;
+        private readonly DeviceScheduler deviceScheduler;
+        private readonly MemoryManager memoryManager;
+        private readonly Random processRand;
+        private readonly Settings modelSettings;
 
     }
 }
