@@ -13,7 +13,7 @@ namespace ComputingSystem
 
         public Memory? Allocate(Process process)
         {
-            if (memory.FreeSize >= process.AddrSpace)
+            if (memory?.FreeSize >= process.AddrSpace)
             {
                 memory.OccupiedSize += process.AddrSpace;
                 return memory;
