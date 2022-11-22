@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Text;
 
 namespace ComputingSystem
 {
@@ -20,19 +17,26 @@ namespace ComputingSystem
         {
             id = pId;
             AddrSpace = addrSpace;
-            name = "P" + pId;
+            name = "P" + pId.ToString();
             Status = ProcessStatus.ready;
         }
 
         public void IncreaseWorkTime()
         {
-            if (workTime < BurstTime)
+            workTime++;
+
+            if (workTime != BurstTime) return;
+
+            if (Status is not ProcessStatus.running)
             {
-                workTime++;
+                Status = ProcessStatus.ready;
+                OnFreeingAResource(device);
                 return;
             }
 
             Status = rnd.Next(0, 2) != 0 ? ProcessStatus.waiting : ProcessStatus.terminated;
+            device.DeviceNumber = rnd.Next(1, 4);
+            OnFreeingAResource(device);
         }
 
         public void ResetWorkTime()
@@ -43,7 +47,7 @@ namespace ComputingSystem
         [Pure]
         public override string ToString()
         {
-            return "Proc" + id + "; BurstTime: " + BurstTime + "; WorkTime: " + workTime +
+            return "Proc" + id + "; BurstTime: " + BurstTime + "; WorkTime: " + workTime.ToString() +
                 "; Status: " + Status.ToString();
         }
 
@@ -58,9 +62,9 @@ namespace ComputingSystem
 
         public event EventHandler FreeingAResource;
 
-        private void OnFreeingAResource()
+        private void OnFreeingAResource(ResourceEventArgs e)
         {
-            FreeingAResource?.Invoke(this, null);
+            FreeingAResource?.Invoke(this, e);
         }
 
 
@@ -77,5 +81,7 @@ namespace ComputingSystem
         private long workTime;
 
         public long AddrSpace { get; private set; }
+
+        readonly ResourceEventArgs device = new();
     }
 }
