@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Queues;
+﻿using Queues;
 using System.ComponentModel;
 using System.Globalization;
-using System.Diagnostics;
 
 namespace ComputingSystem
 {
@@ -21,14 +15,11 @@ namespace ComputingSystem
         public override void DataBind()
         {
             MessageBox.Show("DataBind !!");
+
             frm.LblTime.DataBindings.Add(new Binding("Text", model.Clock, "Clock"));
-
             frm.TbCPU.DataBindings.Add(new Binding("Text", model.Cpu, "ActiveProcess"));
-
             frm.TbDevice.DataBindings.Add(new Binding("Text", model.Device, "ActiveProcess"));
-
             frm.LblFreeMemValue.DataBindings.Add(new Binding("Text", model.Ram, "FreeSize"));
-
             frm.LblOccupatedMemValue.DataBindings.Add(new Binding("Text", model.Ram, "OccupiedSize"));
 
             Binding intensityBinding = new("Value", model.ModelSettings, "Intensity")
@@ -62,10 +53,11 @@ namespace ComputingSystem
             };
             frm.NudAddrSpaceMax.DataBindings.Add(addrSpaceMaxBinding);
 
-            Binding ramSizeBinding = new("SelectedItem", model.ModelSettings, "ValueOfRAMSize");
-            ramSizeBinding.Parse += ObjectToInt;
-            ramSizeBinding.ControlUpdateMode = ControlUpdateMode.Never;
-            frm.NudRamSize.DataBindings.Add(ramSizeBinding);
+            Binding ramSizeBinding = new("SelectedItem", model.ModelSettings, "ValueOfRAMSize")
+            {
+                ControlUpdateMode = ControlUpdateMode.Never
+            };
+            frm.CbRamSize.DataBindings.Add(ramSizeBinding);
 
             Subscribe();
         }
@@ -77,7 +69,7 @@ namespace ComputingSystem
             frm.NudBurstMax.DataBindings.RemoveAt(0);
             frm.NudBurstMin.DataBindings.RemoveAt(0);
             frm.NudBurstMax.DataBindings.RemoveAt(0);
-            frm.NudRamSize.DataBindings.RemoveAt(0);
+            frm.CbRamSize.DataBindings.RemoveAt(0);
 
             Unsubscribe();
         }

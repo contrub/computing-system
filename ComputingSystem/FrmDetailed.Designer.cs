@@ -34,7 +34,7 @@
             this.nudIntensity = new System.Windows.Forms.NumericUpDown();
             this.nudBurstMin = new System.Windows.Forms.NumericUpDown();
             this.nudBurstMax = new System.Windows.Forms.NumericUpDown();
-            this.nudRamSize = new System.Windows.Forms.NumericUpDown();
+            this.cbRamSize = new System.Windows.Forms.ComboBox();
             this.nudAddrSpaceMin = new System.Windows.Forms.NumericUpDown();
             this.nudAddrSpaceMax = new System.Windows.Forms.NumericUpDown();
             this.save = new System.Windows.Forms.Button();
@@ -43,7 +43,7 @@
             this.statistics = new System.Windows.Forms.Button();
             this.rbManual = new System.Windows.Forms.RadioButton();
             this.autoMode = new System.Windows.Forms.RadioButton();
-            this.lblTime = new System.Windows.Forms.TextBox();
+            this.lblTime = new System.Windows.Forms.Label();
             this.lblFreeMemValue = new System.Windows.Forms.TextBox();
             this.lblOccupatedMemValue = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -77,7 +77,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudIntensity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudBurstMin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudBurstMax)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudRamSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAddrSpaceMin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAddrSpaceMax)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -139,12 +138,21 @@
             this.nudBurstMax.Size = new System.Drawing.Size(122, 23);
             this.nudBurstMax.TabIndex = 7;
             // 
-            // nudRamSize
+            // cbRamSize
             // 
-            this.nudRamSize.Location = new System.Drawing.Point(2, 77);
-            this.nudRamSize.Name = "nudRamSize";
-            this.nudRamSize.Size = new System.Drawing.Size(122, 23);
-            this.nudRamSize.TabIndex = 8;
+            this.cbRamSize.FormattingEnabled = true;
+            this.cbRamSize.Items.AddRange(new object[]
+            {
+                "4000",
+                "8000",
+                "16000",
+                "32000",
+                "64000"
+            });
+            this.cbRamSize.Location = new System.Drawing.Point(2, 77);
+            this.cbRamSize.Name = "cbRamSize";
+            this.cbRamSize.Size = new System.Drawing.Size(122, 23);
+            this.cbRamSize.TabIndex = 8;
             // 
             // nudAddrSpaceMin
             // 
@@ -223,7 +231,8 @@
             // 
             this.lblTime.Location = new System.Drawing.Point(12, 24);
             this.lblTime.Name = "lblTime";
-            this.lblTime.ReadOnly = true;
+            this.lblTime.AutoSize = true;
+            this.lblTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.lblTime.Size = new System.Drawing.Size(69, 23);
             this.lblTime.TabIndex = 17;
             // 
@@ -395,7 +404,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.label4);
-            this.groupBox4.Controls.Add(this.nudRamSize);
+            this.groupBox4.Controls.Add(this.cbRamSize);
             this.groupBox4.Location = new System.Drawing.Point(397, 0);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(129, 106);
@@ -531,7 +540,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudIntensity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudBurstMin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudBurstMax)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudRamSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAddrSpaceMin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAddrSpaceMax)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -556,25 +564,13 @@
 
         #endregion
 
-        // private System.Windows.Forms.TextBox queueToCPU;
-        // private System.Windows.Forms.TextBox queueToDevice;
-        // private System.Windows.Forms.TextBox CPU;
-        // private System.Windows.Forms.TextBox Device;
-        // private System.Windows.Forms.DomainUpDown intensity;
-        // private System.Windows.Forms.DomainUpDown minCPU;
-        // private System.Windows.Forms.DomainUpDown maxCPU;
-        // private System.Windows.Forms.DomainUpDown RAM;
-        // private System.Windows.Forms.DomainUpDown minSize;
-        // private System.Windows.Forms.DomainUpDown maxSize;
         private System.Windows.Forms.Button save;
         private System.Windows.Forms.Button workingCycle;
         private System.Windows.Forms.Button end;
         private System.Windows.Forms.Button statistics;
         private System.Windows.Forms.RadioButton manualMode;
         private System.Windows.Forms.RadioButton autoMode;
-        private System.Windows.Forms.TextBox lblTime;
-        // private System.Windows.Forms.TextBox freeSize;
-        // private System.Windows.Forms.TextBox occupiedSize;
+        private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -613,7 +609,7 @@
         private NumericUpDown nudIntensity;
         private NumericUpDown nudBurstMin;
         private NumericUpDown nudBurstMax;
-        private NumericUpDown nudRamSize;
+        private ComboBox cbRamSize;
         private RadioButton rbManual;
         private Button btnWork;
         private Button btnStart;

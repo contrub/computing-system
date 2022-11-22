@@ -1,9 +1,4 @@
-﻿using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-
-namespace ComputingSystem
+﻿namespace ComputingSystem
 {
     public partial class FrmDetailed : Form
     {
@@ -13,76 +8,25 @@ namespace ComputingSystem
         {
             InitializeComponent();
 
-            // cbRamSize.SelectedItem = cbRamSize.Items[0];
+            cbRamSize.SelectedItem = cbRamSize.Items[0];
 
             viewDetailed = new ViewDetailed(new Model(), new Controller(), this);
             viewDetailed.DataBind();
         }
 
-        public TextBox LblTime
-        { 
-            get { return lblTime; }
-        }
-
-        public TextBox TbCPU
-        { 
-            get { return tbCPU; }
-        }
-
-        public TextBox TbDevice
-        {
-            get { return tbDevice; }
-        }
-
-        public TextBox LblFreeMemValue
-        {
-           get { return lblFreeMemValue; }
-        }
-        
-        public TextBox LblOccupatedMemValue
-        { 
-           get { return lblOccupatedMemValue; }
-        }
-
-        public NumericUpDown NudIntensity
-        {
-            get { return nudIntensity; }
-        }
-
-        public NumericUpDown NudBurstMin
-        {
-            get { return nudBurstMin; }
-        }
-
-        public NumericUpDown NudBurstMax
-        {
-            get { return nudBurstMax; }
-        }
-
-        public NumericUpDown NudAddrSpaceMin
-        {
-            get { return nudAddrSpaceMin; }
-        }
-
-        public NumericUpDown NudAddrSpaceMax
-        {
-            get { return nudAddrSpaceMax; }
-        }
-
-        public NumericUpDown NudRamSize
-        {
-            get { return nudRamSize; }
-        }
-
-        public ListBox LbCPUQueue
-        { 
-            get { return lbCPUQueue; }
-        }
-
-        public ListBox LbDeviceQueue
-        { 
-            get { return lbDeviceQueue; }
-        }
+        public Label LblTime => lblTime;
+        public TextBox TbCPU => tbCPU;
+        public TextBox TbDevice => tbDevice;
+        public TextBox LblFreeMemValue => lblFreeMemValue;
+        public TextBox LblOccupatedMemValue => lblOccupatedMemValue;
+        public NumericUpDown NudIntensity => nudIntensity;
+        public NumericUpDown NudBurstMin => nudBurstMin;
+        public NumericUpDown NudBurstMax => nudBurstMax;
+        public NumericUpDown NudAddrSpaceMin => nudAddrSpaceMin;
+        public NumericUpDown NudAddrSpaceMax => nudAddrSpaceMax;
+        public ComboBox CbRamSize => cbRamSize;
+        public ListBox LbCPUQueue => lbCPUQueue;
+        public ListBox LbDeviceQueue => lbDeviceQueue;
 
         private void btnStart_Click(object sender, EventArgs e)
         {
@@ -116,6 +60,7 @@ namespace ComputingSystem
             // btnStart.Enabled = true;
             btnWork.Enabled = false;
             // pnlSettings.Enabled = true;
+            LblTime.Text = "0";
         }
 
         private void updateSettings()
