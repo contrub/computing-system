@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ComputingSystem
+﻿namespace ComputingSystem
 {
     class Controller
     {
-        public void Execute(ModelOperations operation, Model model)
+        public static void Execute(ModelOperations operation, Model model)
         {
             if (model == null)
                 throw new ArgumentNullException("Empty model");
