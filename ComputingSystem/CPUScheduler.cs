@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Queues;
+﻿using Queues;
 
 namespace ComputingSystem
 {
@@ -22,7 +19,7 @@ namespace ComputingSystem
             return queue;
         }
 
-		private readonly Resource resource;
-		private readonly IQueueable<Process> queue;
+		private Resource resource;
+		private IQueueable<Process> queue;
 	}
 }

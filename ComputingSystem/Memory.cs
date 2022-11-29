@@ -1,25 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace ComputingSystem
 {
 
-    class Memory
+    class Memory : INotifyPropertyChanged
     {
         public void Save(long size)
         {
             Size = size;
-            occupiedSize = 0;
-            FreeSize = size;
+            OccupiedSize = 0;
         }
 
         public void Clear()
         {
-            occupiedSize = 0;
-            FreeSize = Size;
+            OccupiedSize = 0;
+            Size = 0;
         }
 
         public long Size { get; private set; }
@@ -28,10 +24,7 @@ namespace ComputingSystem
 
         public long OccupiedSize 
         {
-            get 
-            { 
-                return occupiedSize; 
-            }
+            get => occupiedSize; 
             set { 
                 occupiedSize = value;
                 FreeSize = Size - occupiedSize;
@@ -41,10 +34,7 @@ namespace ComputingSystem
 
         public long FreeSize 
         { 
-            get
-            {
-                return Size - occupiedSize;
-            }
+            get => Size - occupiedSize;
             private set { }
         }
 

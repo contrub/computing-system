@@ -1,6 +1,5 @@
 ﻿using Queues;
 using System.ComponentModel;
-using System.Globalization;
 
 namespace ComputingSystem
 {
@@ -14,13 +13,12 @@ namespace ComputingSystem
 
         public override void DataBind()
         {
-            MessageBox.Show("DataBind !!");
-
             frm.LblTime.DataBindings.Add(new Binding("Text", model.Clock, "Clock"));
             frm.TbCPU.DataBindings.Add(new Binding("Text", model.Cpu, "ActiveProcess"));
-            frm.TbDevice.DataBindings.Add(new Binding("Text", model.Device, "ActiveProcess"));
+            frm.TbDevice1.DataBindings.Add(new Binding("Text", model.Device1, "ActiveProcess"));
+            frm.TbDevice2.DataBindings.Add(new Binding("Text", model.Device2, "ActiveProcess"));
             frm.LblFreeMemValue.DataBindings.Add(new Binding("Text", model.Ram, "FreeSize"));
-            frm.LblOccupatedMemValue.DataBindings.Add(new Binding("Text", model.Ram, "OccupiedSize"));
+            frm.LblOccupiedMemValue.DataBindings.Add(new Binding("Text", model.Ram, "OccupiedSize"));
 
             Binding intensityBinding = new("Value", model.ModelSettings, "Intensity")
             {
@@ -59,6 +57,12 @@ namespace ComputingSystem
             };
             frm.CbRamSize.DataBindings.Add(ramSizeBinding);
 
+            Binding CpuUtilBinding = new Binding("Text", model.statistics, "CpuUtilization", true, DataSourceUpdateMode.Never, null, "#0.##%");
+            frm.TbCpuUtil.DataBindings.Add(CpuUtilBinding);
+
+            Binding CpuProductivityBinding = new Binding("Text", model.statistics, "Throughput", true, DataSourceUpdateMode.Never, null, "#0.##%");
+            frm.TbProductivity.DataBindings.Add(CpuProductivityBinding);
+
             Subscribe();
         }
 
@@ -74,17 +78,7 @@ namespace ComputingSystem
             Unsubscribe();
         }
 
-        private readonly FrmDetailed frm;
-
-        private void ObjectToInt(object sender, ConvertEventArgs cevent)
-        {
-            if (cevent.DesiredType != typeof(int))
-            {
-                return;
-            }
-
-            cevent.Value = int.Parse(cevent.Value.ToString(), NumberStyles.Integer);
-        }
+        private FrmDetailed frm;
 
         private void Subscribe()
         {
@@ -104,7 +98,9 @@ namespace ComputingSystem
             }
             else
             {
-                UpdateListBox(model.DeviceQueue, frm.LbDeviceQueue);
+                UpdateListBox(model.DeviceQueue1, frm.LbDeviceQueue1);
+                UpdateListBox(model.DeviceQueue2, frm.LbDeviceQueue2);
+                UpdateListBox(model.DeviceQueue3, frm.LbDeviceQueue3);
             }
         }
 

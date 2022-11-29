@@ -1,11 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace ComputingSystem
 {
     class IdGenerator
     {
+        private long id;
+
+        public long Id
+        {
+            get
+            {
+                return id == long.MaxValue ? 0 : ++id;
+            }
+        }
+
         public IdGenerator Clear()
         {
             if (this != null)
@@ -14,15 +20,6 @@ namespace ComputingSystem
             }
 
             return this;
-        }
-
-        private long id;
-        public long Id
-        {
-            get
-            {
-                return id == long.MaxValue ? 0 : ++id;
-            }
         }
     }
 }

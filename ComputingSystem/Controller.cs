@@ -2,7 +2,7 @@
 {
     class Controller
     {
-        public static void Execute(ModelOperations operation, Model model)
+        public void Execute(ModelOperations operation, Model model)
         {
             if (model == null)
                 throw new ArgumentNullException("Empty model");

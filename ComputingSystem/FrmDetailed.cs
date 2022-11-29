@@ -2,31 +2,39 @@
 {
     public partial class FrmDetailed : Form
     {
-        private readonly ViewDetailed viewDetailed;
-
         public FrmDetailed()
         {
             InitializeComponent();
-
             cbRamSize.SelectedItem = cbRamSize.Items[0];
-
             viewDetailed = new ViewDetailed(new Model(), new Controller(), this);
             viewDetailed.DataBind();
+            btnSessionEnd.Enabled = false;
+            btnStart.Enabled = true;
+            btnWork.Enabled = false;
         }
 
+        private ViewDetailed viewDetailed { get; set; }
         public Label LblTime => lblTime;
+        public ListBox LbCPUQueue => lbCPUQueue;
+        public ListBox LbDeviceQueue1 => lbDeviceQueue1;
+        public ListBox LbDeviceQueue2 => lbDeviceQueue2;
+        public ListBox LbDeviceQueue3 => lbDeviceQueue1;
         public TextBox TbCPU => tbCPU;
-        public TextBox TbDevice => tbDevice;
-        public TextBox LblFreeMemValue => lblFreeMemValue;
-        public TextBox LblOccupatedMemValue => lblOccupatedMemValue;
+        public TextBox TbDevice1 => tbDevice1;
+        public TextBox TbDevice2 => tbDevice2;
+
+        public TextBox TbCpuUtil => tbCpuUtil;
+        public TextBox TbProductivity => tbProductivity;
+
+        public Label LblFreeMemValue => lblFreeMemValue;
+        public Label LblOccupiedMemValue => lblOccupiedMemValue;
+        public ComboBox CbRamSize => cbRamSize;
         public NumericUpDown NudIntensity => nudIntensity;
         public NumericUpDown NudBurstMin => nudBurstMin;
         public NumericUpDown NudBurstMax => nudBurstMax;
         public NumericUpDown NudAddrSpaceMin => nudAddrSpaceMin;
         public NumericUpDown NudAddrSpaceMax => nudAddrSpaceMax;
-        public ComboBox CbRamSize => cbRamSize;
-        public ListBox LbCPUQueue => lbCPUQueue;
-        public ListBox LbDeviceQueue => lbDeviceQueue;
+        public TableLayoutPanel TlPanelSettings => tlPanelSettings;
 
         private void btnStart_Click(object sender, EventArgs e)
         {
@@ -43,66 +51,59 @@
         {
             viewDetailed.ReactToUserActions(ModelOperations.EndOfSession);
             endOfSession();
-            updateSettings();
+            UpdateSettings();
         }
 
         private void sessionPreparation()
         {
             btnStart.Enabled = false;
-            // btnSessionEnd.Enabled = true;
+            btnSessionEnd.Enabled = true;
+            //btnWork.Enabled = true;
             btnWork.Enabled = rbManual.Checked;
-            // pnlSettings.Enabled = false;
+            if (rbManual.Checked == false)
+            {
+                timer.Start();
+            }
+            TlPanelSettings.Enabled = false;
         }
 
         private void endOfSession()
         {
-            // btnSession.Enabled = false;
-            // btnStart.Enabled = true;
+            btnSessionEnd.Enabled = false;
+            btnStart.Enabled = true;
             btnWork.Enabled = false;
-            // pnlSettings.Enabled = true;
-            LblTime.Text = "0";
+            TlPanelSettings.Enabled = true;
+            if (rbAuto.Checked == true)
+            {
+                timer.Stop();
+            }
         }
 
-        private void updateSettings()
+        private void UpdateSettings()
         {
             nudIntensity.Value = 0.5m;
             nudBurstMin.Value = nudBurstMin.Minimum;
-            nudBurstMax.Value = NudBurstMax.Maximum;
+            nudBurstMax.Value = nudBurstMax.Minimum;
             nudAddrSpaceMin.Value = nudAddrSpaceMin.Minimum;
-            nudAddrSpaceMax.Value = nudAddrSpaceMax.Maximum;
-            // nudRamSize.SelectedItem = nudRamSize.Items[0];
+            nudAddrSpaceMax.Value = nudAddrSpaceMax.Minimum;
+            cbRamSize.SelectedItem = cbRamSize.Items[0];
         }
 
-        private void workingCycle_Click(object sender, EventArgs e)
+        private void rbAuto_CheckedChanged(object sender, EventArgs e)
         {
-            Model model = new();
-            model.ModelSettings.Intensity = 0.8;
-            model.ModelSettings.MinValueOfAddrSpace = 100;
-            model.ModelSettings.MaxValueOfAddrSpace = 300;
-            model.ModelSettings.MinValueOfBurstTime = 3;
-            model.ModelSettings.MaxValueOfBurstTime = 7;
-            model.ModelSettings.ValueOfRAMSize = 32000;
-            model.SaveSettings();
-
-            for (int i = 0; i < 20; i++)
+            if (!rbManual.Checked && btnSessionEnd.Enabled)
             {
-                model.WorkingCycle();
-                if (model.Cpu.ActiveProcess != null)
-                {
-                    MessageBox.Show("On cpu: " + model.Cpu.ActiveProcess.ToString());
-                }
-                if (model.ReadyQueue.Count != 0)
-                {
-                    MessageBox.Show("Первый в очереди готовых процессов: " + model.ReadyQueue.Item());
-                }
-                if (model.Device.ActiveProcess != null)
-                {
-                    MessageBox.Show("On device: " + model.Device.ActiveProcess.ToString());
-                }
-                if (model.DeviceQueue.Count != 0)
-                {
-                    MessageBox.Show("Первый в очереди к внешнему устройству: " + model.DeviceQueue.Item());
-                }
+                timer.Start();
+                btnWork.Enabled = false;
+            }
+        }
+
+        private void rbManual_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbManual.Checked && btnSessionEnd.Enabled)
+            {
+                timer.Stop();
+                btnWork.Enabled = true;
             }
         }
     }

@@ -5,16 +5,16 @@
         public View(Model model, Controller controller)
         {
             this.model = model;
-            // this.controller = controller;
+            this.controller = controller;
         }
 
         public readonly Model model;
-        // public Controller Controller
-        // { private get; set; }
+        public Controller controller
+        { private get; set; }
 
         public void ReactToUserActions(ModelOperations modelOperation)
         {
-            Controller.Execute(modelOperation, model);
+            controller.Execute(modelOperation, model);
         }
 
         public void Dispose()

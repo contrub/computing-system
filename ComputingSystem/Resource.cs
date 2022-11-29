@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using Queues;
 
 namespace ComputingSystem
 {
@@ -13,7 +9,7 @@ namespace ComputingSystem
         {
             if (!IsFree())
             {
-                activeProcess?.IncreaseWorkTime();
+                activeProcess.IncreaseWorkTime();
             }
         }
 
@@ -24,17 +20,14 @@ namespace ComputingSystem
 
         public void Clear()
         {
-            activeProcess.Status = ProcessStatus.terminated;
+            activeProcess = null;
         }
 
-        private Process? activeProcess;
+        private Process activeProcess;
 
-        public Process? ActiveProcess 
+        public Process ActiveProcess 
         { 
-            get
-            {
-                return activeProcess;
-            }
+            get => activeProcess;
             set
             {
                 activeProcess = value;
@@ -42,7 +35,7 @@ namespace ComputingSystem
             } 
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {

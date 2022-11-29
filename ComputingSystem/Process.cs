@@ -23,20 +23,13 @@ namespace ComputingSystem
 
         public void IncreaseWorkTime()
         {
-            workTime++;
-
-            if (workTime != BurstTime) return;
-
-            if (Status is not ProcessStatus.running)
+            if (workTime < BurstTime)
             {
-                Status = ProcessStatus.ready;
-                OnFreeingAResource(device);
+                workTime++;
                 return;
             }
 
-            Status = rnd.Next(0, 2) != 0 ? ProcessStatus.waiting : ProcessStatus.terminated;
-            device.DeviceNumber = rnd.Next(1, 4);
-            OnFreeingAResource(device);
+            OnFreeingAResource();
         }
 
         public void ResetWorkTime()
@@ -51,20 +44,21 @@ namespace ComputingSystem
                 "; Status: " + Status.ToString();
         }
 
-        public int CompareTo (Process? otherProc)
+        public int CompareTo(Process otherProc)
         {
             if (otherProc == null)
             {
                 return 1;
             }
+
             return otherProc.BurstTime.CompareTo(BurstTime);
         }
 
         public event EventHandler FreeingAResource;
 
-        private void OnFreeingAResource(ResourceEventArgs e)
+        private void OnFreeingAResource()
         {
-            FreeingAResource?.Invoke(this, e);
+            FreeingAResource?.Invoke(this, null);
         }
 
 
@@ -81,7 +75,5 @@ namespace ComputingSystem
         private long workTime;
 
         public long AddrSpace { get; private set; }
-
-        readonly ResourceEventArgs device = new();
     }
 }

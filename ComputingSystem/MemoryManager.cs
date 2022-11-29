@@ -1,34 +1,30 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace ComputingSystem
 {
     class MemoryManager
     {
-        public void Save(Memory mem)
+        public void Save(Memory memory)
         {
-            memory = mem;
+            this.memory = memory;
         }
 
-        public Memory? Allocate(Process process)
+        public Memory Allocate(Process proc)
         {
-            if (memory?.FreeSize >= process.AddrSpace)
+            if (memory.FreeSize >= proc.AddrSpace)
             {
-                memory.OccupiedSize += process.AddrSpace;
+                memory.OccupiedSize += proc.AddrSpace;
                 return memory;
             }
 
             return null;
         }
 
-        public Memory Free(Process process)
+        public Memory Free(Process proc)
         {
-            memory.OccupiedSize -= process.AddrSpace;
+            memory.OccupiedSize -= proc.AddrSpace;
 
             return memory;
         }
 
-        private Memory? memory;
+        private Memory memory;
     }
 }

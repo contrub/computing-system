@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Queues;
 
 namespace ComputingSystem
@@ -15,8 +12,9 @@ namespace ComputingSystem
 
         public IQueueable<Process> Session()
         {
-            resource.ActiveProcess = queue.Item();
-
+            Process newActiveProc = queue.Item();
+            queue.Remove();
+            resource.ActiveProcess = newActiveProc;
             return queue;
         }
 
