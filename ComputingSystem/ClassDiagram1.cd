@@ -8,28 +8,28 @@
     </TypeIdentifier>
   </Class>
   <Class Name="ComputingSystem.CPUScheduler">
-    <Position X="2.5" Y="0.5" Width="1.5" />
+    <Position X="2.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAASAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>CPUScheduler.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComputingSystem.DeviceScheduler">
-    <Position X="4.5" Y="0.5" Width="1.5" />
+    <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAASAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DeviceScheduler.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComputingSystem.IdGenerator">
-    <Position X="6.5" Y="0.5" Width="1.5" />
+    <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAgA=</HashCode>
       <FileName>IdGenerator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComputingSystem.Memory">
-    <Position X="8.5" Y="0.5" Width="1.5" />
+    <Position X="7.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IgAAAIAAAAAAgAAAIAAAAAAAgAAAAAAAAAAAACBAAAA=</HashCode>
       <FileName>Memory.cs</FileName>
@@ -37,35 +37,35 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="ComputingSystem.Program">
-    <Position X="6.5" Y="4.25" Width="1.5" />
+    <Position X="0.5" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComputingSystem.SystemClock">
-    <Position X="2.5" Y="10.25" Width="1.5" />
+    <Position X="4" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAIAAAAAAAAAAIAAAAAAAgAAAAAAAAAACAABAAgA=</HashCode>
       <FileName>SystemClock.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComputingSystem.ViewDetailed">
-    <Position X="6.5" Y="10.25" Width="1.5" />
+    <Position X="16.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEAAAAAAAAAAAAACAAAAAAAQAACAEAAQAAAQAAAAAA=</HashCode>
       <FileName>ViewDetailed.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComputingSystem.MemoryManager">
-    <Position X="10.5" Y="0.5" Width="1.5" />
+    <Position X="7.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAIAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAI=</HashCode>
       <FileName>MemoryManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComputingSystem.Model">
-    <Position X="12.75" Y="0.5" Width="1.5" />
+    <Position X="11.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAAAIAIAAAAKMAhIIAARACAkEACAAANQIACAAjIwgE=</HashCode>
       <FileName>Model.cs</FileName>
@@ -73,7 +73,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="ComputingSystem.Process">
-    <Position X="2.5" Y="4.25" Width="1.5" />
+    <Position X="14.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAAUAAAEAAAAAgQEAAAACAAAAAAEBAACAAAAAAAAAgA=</HashCode>
       <FileName>Process.cs</FileName>
@@ -81,7 +81,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="ComputingSystem.Resource">
-    <Position X="8.5" Y="4.25" Width="1.5" />
+    <Position X="2.25" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAAAAIAAAAAAAAEAIAAAAAAAgAAAAAEAAAAAAABAAAA=</HashCode>
       <FileName>Resource.cs</FileName>
@@ -89,14 +89,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="ComputingSystem.Settings">
-    <Position X="10.5" Y="4.25" Width="1.5" />
+    <Position X="4" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAQAAIAABAAAEABAAAAAAEAAA=</HashCode>
       <FileName>Settings.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ComputingSystem.Statistics">
-    <Position X="0.5" Y="10.25" Width="1.5" />
+    <Position X="5.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAAAAECAAAAAAAIABAAAAAwAICAmAAQCQgAABAAAA=</HashCode>
       <FileName>Statistics.cs</FileName>
@@ -104,7 +104,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="ComputingSystem.View">
-    <Position X="4.5" Y="10.25" Width="1.5" />
+    <Position X="13" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEAAAAAACAAAAEAAAAAAAAAAAACAAAAAAAAQAAIAAA=</HashCode>
       <FileName>View.cs</FileName>
@@ -112,14 +112,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Enum Name="ComputingSystem.ModelOperations">
-    <Position X="0.5" Y="4.25" Width="1.5" />
+    <Position X="13" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAIAAAAAAAAAgAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ModelOperations.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="ComputingSystem.ProcessStatus">
-    <Position X="4.5" Y="4.25" Width="1.5" />
+    <Position X="16.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAQAAAAAAAAAAAAAQAAgAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>Process.cs</FileName>
