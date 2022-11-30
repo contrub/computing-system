@@ -13,7 +13,7 @@ namespace ComputingSystem
             deviceQueue1 = new FIFOQueue<Process, SimpleArray<Process>>(new SimpleArray<Process>());
             deviceQueue2 = new FIFOQueue<Process, SimpleArray<Process>>(new SimpleArray<Process>());
             deviceQueue3 = new FIFOQueue<Process, SimpleArray<Process>>(new SimpleArray<Process>());
-            readyQueue = new Queues.PriorityQueue<Process, BinaryHeap<Process>>(new BinaryHeap<Process>());
+            readyQueue = new Queues.PriorityQueue<Process, SimpleLinkedList<Process>>(new SimpleLinkedList<Process>());
             modelSettings = new Settings();
             idGen = new IdGenerator();
             processRand = new Random();
