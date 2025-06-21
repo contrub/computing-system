@@ -1,4 +1,4 @@
-# Course Project: Computing System Modeling
+# Course Project: Computing System
 
 ## Overview
 
