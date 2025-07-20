@@ -4,6 +4,17 @@
 
 This course project is developed for the subject "System Software." It simulates a computing system with a single processor operating in a multiprogramming environment. The focus is on process scheduling, memory management, and device I/O operations using an object-oriented approach.
 
+## Project Demo
+
+<details>
+<summary><b>Click to expand</b></summary>
+
+![System Testing](images/system_testing.png)
+
+System testing demo
+
+</details>
+
 ## Features
 
 - Process management with Round-Robin CPU scheduling
